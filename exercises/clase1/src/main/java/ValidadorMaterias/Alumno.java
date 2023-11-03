@@ -23,8 +23,13 @@ public class Alumno {
         return this.listaMateriasAprobadas;
     }
 
+    /**
+     * Agrego una materia a la lista de materias aprobadas del Alumno
+     * @param materia materia a agregar
+     * @return *true* si no está ya incluido en la lista, de lo contrario *false*
+     */
     public boolean agregarMateriaAprobada(Materia materia){
-        if (!this.listaMateriasAprobadas.contains(materia)){
+        if (!Materia.estaIncluida(materia, this.listaMateriasAprobadas)){
             return this.listaMateriasAprobadas.add(materia);
         } else return false;
     }
