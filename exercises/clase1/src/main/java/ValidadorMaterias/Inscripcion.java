@@ -2,22 +2,20 @@ package ValidadorMaterias;
 
 public class Inscripcion {
     private final Materia materia;
-    private final boolean estadoAprobacion;
     private final boolean puedeCursar;
 
     public Inscripcion(Materia materia, Alumno alumno){
         super();
         this.materia = materia;
-        this.estadoAprobacion = this.materia.getAprobada();
         this.puedeCursar = !Materia.estaIncluida(this.materia, alumno.getListaMaterias()) && this.materia.verificarCorrelativas();
     }
 
     /**
-     * Verifica si la materia a inscribirse se ha aprobado o no
-     * @return *true* Si la materia inscrita se ha aprobado, de lo contrario *false*
+     * Verifica si se ha aprobado la inscripción a la materia
+     * @return *true* Si se cumple las condiciones, de lo contrario *false*
      */
-    public Boolean aprobada(){
-        return this.estadoAprobacion;
+    public boolean aprobada(){
+        return this.puedeCursar;
     }
 
     /**
@@ -28,8 +26,8 @@ public class Inscripcion {
      */
     public String puedeCursar(){
         StringBuilder sB = new StringBuilder();
-        sB.append(this.puedeCursar ? "Puede Cursar" : "No puede cursar");
-        if (!this.puedeCursar){
+        sB.append(this.aprobada() ? "Puede Cursar" : "No puede cursar");
+        if (!this.aprobada()){
             sB.append("\nDebe regularizar: ");
             for(Materia mat : this.materia.getCorrelativas()){
                 if (!mat.getAprobada()){
